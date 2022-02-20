@@ -1,0 +1,6 @@
+name: API_GoRest
+on:
+  workflow_dispatch:
+
+
+     
