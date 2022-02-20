@@ -1,0 +1,559 @@
+{
+	"info": {
+		"_postman_id": "53e332be-8553-4d23-a22d-69af4d02711d",
+		"name": "GoRest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status get user 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var resp_Json = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Check property email in response\", function () {\r",
+							"\t\r",
+							"    for (var i in resp_Json) {\r",
+							"    pm.expect(resp_Json[i]).to.have.property(\"email\")\r",
+							"   }\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var resp_Json = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Correct User ID in response\", function () {\r",
+							"    pm.expect(resp_Json[0].id).to.eql(55);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Property id in response\", function () {\r",
+							"    pm.expect(resp_Json[0]).to.have.property(\"id\")});\r",
+							"\r",
+							"pm.test(\"Property name in response\", function () {\r",
+							"    pm.expect(resp_Json[0]).to.have.property(\"name\")});\r",
+							"\r",
+							"pm.test(\"Property email in response\", function () {\r",
+							"    pm.expect(resp_Json[0]).to.have.property(\"email\")});\r",
+							"\r",
+							"pm.test(\"Property gender in response\", function () {\r",
+							"    pm.expect(resp_Json[0]).to.have.property(\"gender\")});\r",
+							"\r",
+							"pm.test(\"Property status in response\", function () {\r",
+							"    pm.expect(resp_Json[0]).to.have.property(\"status\")});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users?id=55",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "55"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get male users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var resp_Json = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Check property male\", function () {\r",
+							"\t\r",
+							"    for (var i in resp_Json) {\r",
+							"    pm.expect(resp_Json[i].gender).to.equal('male')\r",
+							"    console.log(resp_Json[i].gender)\r",
+							"   }\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/users?gender=male",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "gender",
+							"value": "male"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get posts",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/posts",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"setTimeout(function(){}, 2000)\r",
+							"\r",
+							"pm.test(\"Status code is 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"var resp_Json = pm.response.json()\r",
+							"pm.environment.set(\"idUser\", resp_Json.id);\r",
+							"\r",
+							"pm.test(\"Property id in response\", function () {\r",
+							"    pm.expect(resp_Json).to.have.property(\"id\")});\r",
+							"\r",
+							"pm.test(\"Property name in response\", function () {\r",
+							"    pm.expect(resp_Json).to.have.property(\"name\")});\r",
+							"\r",
+							"pm.test(\"Property email in response\", function () {\r",
+							"    pm.expect(resp_Json).to.have.property(\"email\")});\r",
+							"\r",
+							"pm.test(\"Property gender in response\", function () {\r",
+							"    pm.expect(resp_Json).to.have.property(\"gender\")});\r",
+							"\r",
+							"pm.test(\"Property status in response\", function () {\r",
+							"    pm.expect(resp_Json).to.have.property(\"status\")});\r",
+							"\r",
+							"pm.test(\"Correct email in response\", function () {\r",
+							"    pm.expect(resp_Json.email).to.eql(pm.environment.get(\"rand_email\"));\r",
+							"});\r",
+							"\r",
+							"let user_name = JSON.parse(pm.request.body.raw).name;\r",
+							"\r",
+							"pm.environment.set('user_name', user_name);\r",
+							"\r",
+							"pm.test(\"Correct name in response\", function () {\r",
+							"    pm.expect(resp_Json.name).to.eql(pm.environment.get(\"user_name\"));\r",
+							"});\r",
+							"\r",
+							"let user_gender = JSON.parse(pm.request.body.raw).gender;\r",
+							"\r",
+							"pm.environment.set('user_gender', user_gender);\r",
+							"\r",
+							"pm.test(\"Correct gender in response\", function () {\r",
+							"    pm.expect(resp_Json.gender).to.eql(pm.environment.get(\"user_gender\"));\r",
+							"});\r",
+							"\r",
+							"let user_status = JSON.parse(pm.request.body.raw).status;\r",
+							"\r",
+							"pm.environment.set('user_status', user_status);\r",
+							"\r",
+							"pm.test(\"Correct status in response\", function () {\r",
+							"    pm.expect(resp_Json.status).to.eql(pm.environment.get(\"user_status\"));\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const r_email = pm.variables.replaceIn(\"{{$randomEmail}}\");\r",
+							"pm.environment.set(\"rand_email\", r_email);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "acd27ddfc81d9e2389b3d46001e2729ffc82327950d11d0f15471b5ee25ca5f2",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Jaina Proudmoore\", \r\n \"gender\":\"female\", \r\n \"email\":\"{{rand_email}}\", \r\n \"status\":\"active\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/users?access-token=acd27ddfc81d9e2389b3d46001e2729ffc82327950d11d0f15471b5ee25ca5f2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "access-token",
+							"value": "acd27ddfc81d9e2389b3d46001e2729ffc82327950d11d0f15471b5ee25ca5f2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var resp_Json = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Correct User ID in response\", function () {\r",
+							"    pm.expect(resp_Json[0].user_id).to.eql(3460);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Property id in response\", function () {\r",
+							"    pm.expect(resp_Json[0]).to.have.property(\"id\")});\r",
+							"\r",
+							"pm.test(\"Property user_id in response\", function () {\r",
+							"    pm.expect(resp_Json[0]).to.have.property(\"user_id\")});\r",
+							"\r",
+							"pm.test(\"Property title in response\", function () {\r",
+							"    pm.expect(resp_Json[0]).to.have.property(\"title\")});\r",
+							"\r",
+							"pm.test(\"Property body in response\", function () {\r",
+							"    pm.expect(resp_Json[0]).to.have.property(\"body\")});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/posts?user_id=3460",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "3460"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"var resp_Json = pm.response.json()\r",
+							"\r",
+							"\r",
+							"pm.test(\"Property id in response\", function () {\r",
+							"    pm.expect(resp_Json).to.have.property(\"id\")});\r",
+							"\r",
+							"pm.test(\"Property user_id in response\", function () {\r",
+							"    pm.expect(resp_Json).to.have.property(\"user_id\")});\r",
+							"\r",
+							"pm.test(\"Property title in response\", function () {\r",
+							"    pm.expect(resp_Json).to.have.property(\"title\")});\r",
+							"\r",
+							"pm.test(\"Property body in response\", function () {\r",
+							"    pm.expect(resp_Json).to.have.property(\"body\")\r",
+							"    });\r",
+							"\r",
+							"pm.test(\"Correct user_id in response\", function () {\r",
+							"    pm.expect(resp_Json.user_id).to.eql(pm.environment.get(\"idUser\"))\r",
+							"});\r",
+							"\r",
+							"let post_title = JSON.parse(pm.request.body.raw).title;\r",
+							"\r",
+							"pm.environment.set('post_title', post_title);\r",
+							"\r",
+							"pm.test(\"Correct title in response\", function () {\r",
+							"    pm.expect(resp_Json.title).to.eql(pm.environment.get(\"post_title\"));\r",
+							"});\r",
+							"\r",
+							"let post_body = JSON.parse(pm.request.body.raw).body;\r",
+							"\r",
+							"pm.environment.set('post_body', post_body);\r",
+							"\r",
+							"pm.test(\"Correct body in response\", function () {\r",
+							"    pm.expect(resp_Json.body).to.eql(pm.environment.get(\"post_body\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"title\":\"Summer\", \r\n \"body\":\"All I need is Summer\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/{{idUser}}/posts?access-token={{token}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{idUser}}",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "access-token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var resp_Json = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Correct email in response\", function () {\r",
+							"    pm.expect(resp_Json.email).to.eql('artas@32ce.com')\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct name in response\", function () {\r",
+							"    pm.expect(resp_Json.name).to.eql('Artas')\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct gender in response\", function () {\r",
+							"    pm.expect(resp_Json.gender).to.eql('male')\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct id in response\", function () {\r",
+							"    pm.expect(resp_Json.id).to.eql(pm.environment.get(\"idUser\"))\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Artas\", \r\n    \"email\": \"artas@32ce.com\",\r\n    \"status\":\"active\",\r\n    \"gender\":\"male\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/{{idUser}}?access-token={{token}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{idUser}}"
+					],
+					"query": [
+						{
+							"key": "access-token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status delete user\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/{{idUser}}?access-token={{token}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{idUser}}"
+					],
+					"query": [
+						{
+							"key": "access-token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
