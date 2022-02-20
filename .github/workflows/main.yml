@@ -2,5 +2,8 @@ name: API_GoRest
 on:
   workflow_dispatch:
 
+jobs:
+  test-api:
+     runs-on: ubuntu-latest
 
      
