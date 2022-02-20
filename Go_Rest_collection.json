@@ -122,8 +122,7 @@
 							"pm.test(\"Check property male\", function () {\r",
 							"\t\r",
 							"    for (var i in resp_Json) {\r",
-							"    pm.expect(resp_Json[i].gender).to.equal('male')\r",
-							"    console.log(resp_Json[i].gender)\r",
+							"    pm.expect(resp_Json[i].gender).to.equal('male')\r"
 							"   }\r",
 							"\r",
 							"});"
