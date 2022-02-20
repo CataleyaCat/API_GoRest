@@ -32,7 +32,7 @@ jobs:
       # Run the POSTMAN collection
       - name: Run POSTMAN collection
         run: |
-          newman run Go_Rest_collection.json -e Go_Rest_environment.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html
+          newman run Go_Rest_collection.json -e Go_Rest_environment.json 
 
 
       # Upload the contents of Test Results directory to workspace
